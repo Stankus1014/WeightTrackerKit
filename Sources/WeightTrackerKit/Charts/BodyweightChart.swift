@@ -12,19 +12,23 @@ public struct BodyweightChart: View {
     @StateObject private var dataManager = DataManager.shared
     private var chartHeight: CGFloat
     private var type: BodyweightChartType
+    private var valueSpecifier: String
     
     public init(
         type: BodyweightChartType,
-        chartHeight: CGFloat
+        chartHeight: CGFloat,
+        valueSpecifier: String = "%.1f"
     ) {
         self.type = type
         self.chartHeight = chartHeight
+        self.valueSpecifier = valueSpecifier
     }
     
     public var body: some View {
         ModernLineChart(
             data: self.getData(),
-            chartHeight: self.chartHeight
+            chartHeight: self.chartHeight,
+            valueSpecifier: valueSpecifier
         )
     }
     
