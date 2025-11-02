@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "WeightTrackerKit",
     platforms: [
-        .iOS(.v14)
+        .iOS(.v18)
     ],
     products: [
         .library(
@@ -16,8 +16,9 @@ let package = Package(
     ],
     dependencies: [
             .package(url: "https://github.com/stephencelis/SQLite.swift.git", from: "0.15.3"),
-            .package(url: "https://github.com/Stankus1014/ModernCharts.git", from: "1.0.0"),
-            .package(url: "https://github.com/Stankus1014/CoreWeightModels.git", from: "1.0.3")
+            .package(url: "https://github.com/Stankus1014/ModernCharts.git", from: "1.0.5"),
+            .package(url: "https://github.com/Stankus1014/CoreWeightModels.git", from: "1.0.6"),
+            .package(url: "https://github.com/Stankus1014/InputKit.git", from: "1.0.3")
     ],
     targets: [
         .target(
@@ -25,7 +26,8 @@ let package = Package(
             dependencies: [
                 .product(name: "SQLite", package: "SQLite.swift"),
                 .product(name: "ModernCharts", package: "ModernCharts"),
-                .product(name: "CoreWeightModels", package: "CoreWeightModels")
+                .product(name: "CoreWeightModels", package: "CoreWeightModels"),
+                .product(name: "InputKit", package: "InputKit")
             ]
         ),
 
