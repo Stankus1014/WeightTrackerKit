@@ -38,12 +38,14 @@ public class BodyweightDB {
     public static func deleteTodaysWeight() async {
         await Database.shared.bootUp()
         await Database.shared.deleteWeights(startDate: Date(), endDate: Date())
+        await DataManager.shared.updateData()
     }
     
     public static func deleteThisWeeksWeight() async {
         await Database.shared.bootUp()
         if let range = Date.currentWeekRange() {
             await Database.shared.deleteWeights(startDate: range.start, endDate: range.end)
+            await DataManager.shared.updateData()
         }
     }
     
@@ -51,17 +53,20 @@ public class BodyweightDB {
         await Database.shared.bootUp()
         if let range = Date.currentMonthRange() {
             await Database.shared.deleteWeights(startDate: range.start, endDate: range.end)
+            await DataManager.shared.updateData()
         }
     }
     
     public static func deleteWeight(startDate: Date, endDate: Date) async {
         await Database.shared.bootUp()
         await Database.shared.deleteWeights(startDate: startDate, endDate: endDate)
+        await DataManager.shared.updateData()
     }
     
     public static func deleteAllWeight() async {
         await Database.shared.bootUp()
         await Database.shared.deleteAllWeights()
+        await DataManager.shared.updateData()
     }
     
     static func getCurrentMonth() async -> [(Date, Double)]? {
