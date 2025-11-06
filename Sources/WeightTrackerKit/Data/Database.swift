@@ -165,6 +165,34 @@ actor Database {
         }
     }
     
+    internal func deleteWeights(startDate: Date, endDate: Date) {
+        guard let database = database else { return }
+        
+        let calendar = Calendar.current
+        let startOfStartDate = calendar.startOfDay(for: startDate)
+        
+        let startOfEndDate = calendar.startOfDay(for: endDate)
+        guard let nextDay = calendar.date(byAdding: .day, value: 1, to: startOfEndDate) else { return }
+        
+        do {
+            let rangeFilter = weightDate >= startOfStartDate && weightDate < nextDay
+            let deleteQuery = weightTable.filter(rangeFilter)
+            try database.run(deleteQuery.delete())
+        } catch {
+            print("! --- Error deleting weights from startDate: \(startDate) to endDate: \(endDate)")
+        }
+    }
+    
+    internal func deleteAllWeights() {
+        guard let database = database else { return }
+        
+        do {
+            try database.run(weightTable.delete())
+        } catch {
+            print("! --- Error deleting all weights: \(error)")
+        }
+    }
+    
 }
 
 
