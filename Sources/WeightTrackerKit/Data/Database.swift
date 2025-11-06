@@ -135,10 +135,33 @@ actor Database {
             }
             
             return Array(zip(dates, weights))
-        }
-        catch {
+        } catch {
             print("! --- Error fetching weights from \(startDate) to \(endDate)")
             return []
+        }
+    }
+    
+    internal func fetchLastWeight() -> Double? {
+        guard let database = database else { return nil }
+        
+        do {
+            let query = weightTable
+                .order(weightDate.desc)
+                .limit(1)
+            
+            let rows = try database.prepare(query)
+            
+            for row in rows {
+                if let encodedWeightString = row[self.encodedWeight] {
+                    let data = encodedWeightString.data(using: .utf8)!
+                    let weight = try JSONDecoder().decode(Weight.self, from: data)
+                    return weight.normalized().value
+                }
+            }
+            return nil
+        } catch {
+            print("! --- Error fetching last weight: \(error)")
+            return nil
         }
     }
     

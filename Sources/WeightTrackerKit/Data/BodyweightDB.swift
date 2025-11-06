@@ -20,6 +20,11 @@ public class BodyweightDB {
         return await Database.shared.fetchWeight(for: Date())
     }
     
+    public static func getLastWeight() async -> Double? {
+        await Database.shared.bootUp()
+        return await Database.shared.fetchLastWeight()
+    }
+    
     public static func getWeightForDate(_ date: Date) async -> Double? {
         await Database.shared.bootUp()
         return await Database.shared.fetchWeight(for: date)
